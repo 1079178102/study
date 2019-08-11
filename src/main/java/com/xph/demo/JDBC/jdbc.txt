@@ -1,0 +1,72 @@
+1.概念：Java DataBase Connectivity Java 数据库连接， java语言操作数据库
+  JDBC本质:其实是官方（sun公司）定义的一套操作所有关系型数据库的规则，即接口。各个数据库厂商去实现这套接口，提供数据库驱动jar包。我们可以使用这套接口（JDBC）编程，真正执行的代码是驱动jar包中的实现类
+
+2.步骤：
+    1.导入驱动jar包
+    2.注册驱动
+    3.获取数据库连接对象Connection
+    4.定义sql
+    5.获取执行sql语句的对象statement
+    6.执行sql接受返回结果
+    7.处理结果
+    8.释放资源
+
+3.详解各个对象
+    1.DriverManager：驱动管理对象
+        * 功能：
+            1.注册驱动：告诉程序该使用哪一个数据库驱动jar
+                static void registerDriver(Driver driver)：注册与给定的驱动程序 DriverManager
+                写代码使用：Class.forName("com.mysql.jdbc.Driver");
+                通过查看源码发现：在com.mysql.jdbc.Driver类中存在静态代码块
+                static{
+                    try{
+                        java.sql.DriverManager.registerDriver(new Driver());
+                    }catch(){
+                        throw new RuntimeException("Can't register driver!");
+                    }
+                }
+                注意：mysql5之后的驱动jar包可以省略注册驱动的步骤
+            2.获取数据库连接
+                * 方法：static Connection getConnection(String url,String user,String password);
+                * 参数：
+                    * url：指定连接的路径
+                        * 语法：jdbc:mysql://ip地址(域名):端口号/数据库名称
+                    * user ：用户名
+                    * password ：密码
+    2.Connection：数据库连接对象
+        1.功能：
+            1.获取执行sql的对象
+                * Statement createStatement()
+                * PreparedStatement preparedStatement(String sql)
+            2.管理事务：
+                * 开启事务：void setAutoCommit(boolean autoCommit) ：调用该方法设置参数为false.即开启事务
+                * 提交事务：commit()
+                * 回滚事务：rollback()
+    3.Statement：执行静态sql的对象
+        1.执行sql
+            1. boolean execute(String sql)：可以执行任意的sql (了解)
+            2. int executUpdate(String sql)：执行DML(insert、update、delete)语句、DDL(create、alter、drop)语句
+                * 返回值：影响的行数，可以通过这个影响的行数判断DML语句是否执行成功 返回值>0的则执行成功，反之执行失败
+            3. ResultSet executeQuery(String sql)：执行DQL(select)语句
+    4.ResultSet：结果集对象
+        * next()：游标向下移动一行
+        * getXxx()：获取数据
+            * Xxx：代表数据类型 如：int getInt() , String getString()
+            * 参数：
+                1.int ：代表列的编号，从1开始。 如：getString(1)
+                2.String ：代表列名称。如：getDouble("money")
+        * 注意：
+            * 使用步骤：
+                1. 游标向下移动一行
+                2. 判断是否有数据
+                3. 获取数据
+    5.PreparedStatement：执行动态sql的对象
+
+## 抽取JDBC工具类：JDBCUtils
+    * 目的：简化书写
+    * 分析：
+        1. 注册驱动也抽取
+        2. 抽取一个方法获取连接对象
+            * 需求：不想传递参数（麻烦），还得保证工具类的通用性
+            * 解决：使用配置文件 dbconfig.properties
+        3. 抽取一个方法释放资源
