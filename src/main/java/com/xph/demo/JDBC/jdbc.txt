@@ -61,6 +61,28 @@
                 2. 判断是否有数据
                 3. 获取数据
     5.PreparedStatement：执行动态sql的对象
+        1. SQL注入问题：在拼接sql时，有一些sql的特殊关键字参与字符串的拼接，会造成安全性问题
+            1. 输入用户随便，输入密码：a ' or 'a'= 'a
+            2.sql : select * from user where username = 'dhahw' and password = 'a' or 'a' = 'a'
+        2. 解决sql注入问题：使用PreparedStatement对象来解决
+        3. 预编译的SQL：参数使用?作为占位符
+        4. 步骤：
+            1.导入驱动jar包
+            2.注册驱动
+            3.获取数据库连接对象Connection
+            4.定义sql
+                * 注意：sql的参数使用?作为占位符。如：select * from user where username = ? and password = ?
+            5.获取执行sql语句的对象 PreparedStatement Connection.preparedStatement(String sql)
+            6.给?赋值：
+                * 方法：setXxx(参数1，参数2)
+                    * 参数1：?的位置编号从1开始
+                    * 参数2：?的值
+            7.执行sql接受返回结果，不需要传递sql语句了
+            8.处理结果
+            9.释放资源
+        5. 后期都会使用PreparedStatement来完成增删改查的所有操作
+            1. 可以防止SQL注入
+            2. 效率更高
 
 ## 抽取JDBC工具类：JDBCUtils
     * 目的：简化书写
@@ -70,3 +92,17 @@
             * 需求：不想传递参数（麻烦），还得保证工具类的通用性
             * 解决：使用配置文件 dbconfig.properties
         3. 抽取一个方法释放资源
+
+## JDBC控制事务
+    1. 事务：一个包含多个步骤的业务操作。如果这个业务操作被事务管理，则这么多个步骤要么同时成功，要么同时失败
+    2. 操作：
+        1. 开启事务
+        2. 提交事务
+        3. 回滚事务
+    3. 使用Connection对象来管理事务
+        * 开始事务：setAutoCommit(boolean autoCommit) ：调用改方法设置参数为false,即开启事务
+            * 在执行sql之前开启事务
+        * 提交事务：commit()
+            * 当所有sql都执行完提交事务
+        * 回滚事务：rollback()
+            * 在catch中回滚事务

@@ -114,6 +114,15 @@
       <version>5.1.41</version>
     </dependency>
 
+    <!--druid数据库连接池-->
+    <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.19</version>
+    </dependency>
+
+
     <!-- （jstl，servlet-api，junit） -->
     <!-- https://mvnrepository.com/artifact/jstl/jstl -->
     <dependency>
