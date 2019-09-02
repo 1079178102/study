@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.Properties;
 
 /**
+ * 数据库连接池
  * Druid演示
  * 需要druid.properties配置文件
  */
