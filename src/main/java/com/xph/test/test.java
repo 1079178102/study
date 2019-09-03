@@ -1,7 +1,6 @@
 package com.xph.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.sauronsoftware.jave.Encoder;
 import org.junit.Test;
 
 import java.io.File;
@@ -9,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class test {
+
+    @Test
+    public void test3(){
+        System.out.println(Long.MAX_VALUE);
+    }
 
     @Test
     public void test2(){
