@@ -28,7 +28,7 @@ public class VideoDuration {
         报异常的视频时长以0秒计算
      */
     public static void main(String[] args) {
-        String path = "F:\\视频\\最新2019年传智黑马java完整视频idea版本\\阶段3 1.Mybatis\\04.自定义Mybatis框架基于注解开发";
+        String path = "F:\\视频\\最新2019年传智黑马java完整视频idea版本\\阶段3 1.Mybatis";
         VideoDuration vD = new VideoDuration();
         File file = new File(path);
         long videoDurations = vD.getVideosDuration(file);

@@ -1,18 +1,18 @@
 package com.xph.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 public class test {
-
-    @Test
-    public void test3(){
-        System.out.println(Long.MAX_VALUE);
-    }
 
     @Test
     public void test2(){

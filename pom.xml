@@ -188,6 +188,15 @@
       <version>1.0.2</version>
     </dependency>
 
+    <!--BCrypt加密-->
+    <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
+    <dependency>
+      <groupId>org.mindrot</groupId>
+      <artifactId>jbcrypt</artifactId>
+      <version>0.4</version>
+    </dependency>
+
+
     <!--study用-->
 
   </dependencies>
